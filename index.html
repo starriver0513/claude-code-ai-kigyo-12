@@ -1,0 +1,1912 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Codeで始める AI起業12選 実践ロードマップ</title>
+  <meta name="description" content="完全未経験からClaude CodeでAI起業を始めるための保存版資料。12個のビジネスモデル、始め方、向いている人、注意点、実践プロンプトを整理。" />
+  <style>
+    :root {
+      --ink: #0b1020;
+      --ink-soft: #22304a;
+      --muted: #5c6880;
+      --blue: #0866ff;
+      --blue-dark: #073b9a;
+      --blue-soft: #eef5ff;
+      --cyan: #28d3ff;
+      --sky: #d9eaff;
+      --line: #d8e4f6;
+      --bg: #f6f9ff;
+      --white: #ffffff;
+      --card: #ffffff;
+      --shadow: 0 22px 60px rgba(8, 32, 80, 0.12);
+      --shadow-soft: 0 12px 34px rgba(8, 32, 80, 0.08);
+      --radius: 18px;
+      --radius-sm: 12px;
+      --max: 1040px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 20% 0%, rgba(8, 102, 255, 0.08), transparent 28%),
+        linear-gradient(180deg, #f9fbff 0%, #eef5ff 100%);
+      line-height: 1.9;
+      letter-spacing: 0;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .content-card a,
+    .note a,
+    .mini-card a,
+    .check-list a {
+      color: var(--blue);
+      font-weight: 800;
+      text-decoration-thickness: 2px;
+      text-underline-offset: 3px;
+    }
+
+    .page {
+      width: min(var(--max), calc(100vw - 36px));
+      margin: 0 auto;
+      padding: 36px 0 80px;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 24px;
+      color: #fff;
+      padding: clamp(34px, 5vw, 70px);
+      background:
+        linear-gradient(135deg, rgba(4, 12, 34, 0.95) 0%, rgba(4, 32, 91, 0.96) 48%, rgba(4, 86, 201, 0.94) 100%),
+        linear-gradient(45deg, rgba(255,255,255,0.08) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.08) 75%, transparent 75%);
+      box-shadow: var(--shadow);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(135deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 72px 72px;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 18px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 6vw, 62px);
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .hero-accent {
+      color: #72d9ff;
+      display: inline-block;
+    }
+
+    .hero-copy {
+      width: min(760px, 100%);
+      margin: 22px 0 0;
+      color: rgba(255,255,255,0.9);
+      font-size: clamp(15px, 2vw, 18px);
+      font-weight: 600;
+      overflow-wrap: anywhere;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+
+    .hero-meta span {
+      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.92);
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .notice {
+      margin: 18px 0 0;
+      color: rgba(255,255,255,0.72);
+      font-size: 12px;
+      overflow-wrap: anywhere;
+    }
+
+    .intro {
+      margin-top: 30px;
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--blue);
+      padding: clamp(24px, 4vw, 38px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .intro h2,
+    .toc h2,
+    .content-card h3 {
+      margin-top: 0;
+    }
+
+    .lead {
+      color: var(--ink-soft);
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .note {
+      background: var(--blue-soft);
+      border: 1px solid var(--sky);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      color: var(--ink-soft);
+      font-size: 14px;
+    }
+
+    .toc {
+      margin-top: 30px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: clamp(24px, 4vw, 38px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .toc h2 {
+      font-size: 24px;
+      line-height: 1.35;
+    }
+
+    .toc-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .toc-list a {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      transition: 0.2s ease;
+      color: var(--ink);
+      font-weight: 700;
+      background: #fbfdff;
+    }
+
+    .toc-list a:hover {
+      border-color: var(--sky);
+      background: var(--blue-soft);
+      transform: translateX(4px);
+    }
+
+    .toc-number {
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: 12px;
+      color: #fff;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    }
+
+    .section-header {
+      margin: 52px 0 22px;
+      border-radius: 20px;
+      color: #fff;
+      padding: clamp(24px, 4vw, 36px);
+      background:
+        linear-gradient(135deg, #07101f 0%, #092b68 54%, #064dc7 100%);
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .section-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(135deg, rgba(255,255,255,0.06) 1px, transparent 1px),
+        linear-gradient(45deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+      background-size: 70px 70px;
+      pointer-events: none;
+    }
+
+    .section-kicker {
+      position: relative;
+      display: inline-flex;
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      border-radius: 999px;
+      padding: 5px 16px;
+      font-size: 13px;
+      font-weight: 900;
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      position: relative;
+      margin: 0;
+      color: #fff;
+      font-size: clamp(22px, 4vw, 34px);
+      line-height: 1.35;
+      font-weight: 800;
+    }
+
+    .content-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--blue);
+      padding: clamp(24px, 4vw, 36px);
+      margin-bottom: 22px;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .content-card h3 {
+      border-left: 5px solid var(--blue);
+      padding-left: 14px;
+      color: var(--ink);
+      font-size: 22px;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .content-card h4 {
+      color: var(--blue-dark);
+      font-size: 18px;
+      line-height: 1.45;
+      margin: 28px 0 10px;
+      font-weight: 800;
+    }
+
+    .content-card p {
+      margin: 0 0 14px;
+      color: var(--ink-soft);
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin: 18px 0;
+    }
+
+    .grid.three {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .mini-card,
+    .tool-card,
+    .step-card {
+      background: #fbfdff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .mini-card strong,
+    .tool-card strong,
+    .step-card strong {
+      display: block;
+      font-size: 16px;
+      color: var(--ink);
+      margin-bottom: 6px;
+      font-weight: 800;
+    }
+
+    .mini-card p,
+    .tool-card p,
+    .step-card p {
+      font-size: 14px;
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 22px 0;
+    }
+
+    .stat {
+      border-radius: 16px;
+      background: linear-gradient(135deg, #061a3c, #075ed7);
+      color: #fff;
+      padding: 20px;
+    }
+
+    .stat small {
+      display: block;
+      color: rgba(255,255,255,0.74);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.2;
+      font-weight: 900;
+    }
+
+    .flow {
+      display: grid;
+      gap: 12px;
+      margin: 20px 0;
+    }
+
+    .flow-item {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      align-items: start;
+      background: #fbfdff;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .flow-index {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 18px;
+      font-weight: 900;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+    }
+
+    .flow-item h4 {
+      margin: 0 0 4px;
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .flow-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .check-list,
+    .plain-list {
+      margin: 16px 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    .check-list li,
+    .plain-list li {
+      position: relative;
+      padding: 12px 14px 12px 40px;
+      border-radius: 12px;
+      background: #fbfdff;
+      border: 1px solid var(--line);
+      color: var(--ink-soft);
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 14px;
+      top: 11px;
+      color: var(--blue);
+      font-weight: 900;
+    }
+
+    .plain-list li::before {
+      content: "";
+      position: absolute;
+      left: 17px;
+      top: 22px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .quote {
+      margin: 20px 0;
+      border-left: 5px solid var(--blue);
+      background: var(--blue-soft);
+      border-radius: 0 14px 14px 0;
+      padding: 18px 22px;
+      color: var(--ink-soft);
+      font-weight: 800;
+    }
+
+    .prompt-card {
+      position: relative;
+      border-radius: 16px;
+      background: #07101f;
+      color: #eaf3ff;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      margin: 18px 0 26px;
+      box-shadow: 0 16px 42px rgba(3, 16, 42, 0.24);
+    }
+
+    .prompt-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: center;
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .prompt-title {
+      font-size: 13px;
+      font-weight: 900;
+      color: #fff;
+    }
+
+    .copy-btn {
+      border: 0;
+      color: #07101f;
+      background: #72d9ff;
+      border-radius: 8px;
+      padding: 7px 10px;
+      font-size: 12px;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .copy-btn:hover {
+      background: #fff;
+    }
+
+    pre {
+      margin: 0;
+      padding: 18px;
+      overflow-x: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      line-height: 1.8;
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+      font-size: 13px;
+    }
+
+    code {
+      font-family: inherit;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      margin: 18px 0;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 760px;
+      background: #fff;
+    }
+
+    th {
+      background: #071a3d;
+      color: #fff;
+      text-align: left;
+      padding: 12px 14px;
+      font-size: 13px;
+    }
+
+    td {
+      border-top: 1px solid var(--line);
+      padding: 12px 14px;
+      color: var(--ink-soft);
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    .tool-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+
+    .tool-card a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      color: var(--blue);
+      text-decoration: none;
+      font-weight: 900;
+      font-size: 13px;
+    }
+
+    .tool-card a:hover {
+      text-decoration: underline;
+    }
+
+    .cta {
+      margin-top: 52px;
+      border-radius: 22px;
+      padding: clamp(28px, 5vw, 48px);
+      background:
+        linear-gradient(135deg, #06101f, #062b70 55%, #0866ff);
+      color: #fff;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+
+    .cta h2 {
+      margin: 0 0 12px;
+      font-size: clamp(24px, 4vw, 36px);
+      line-height: 1.35;
+    }
+
+    .cta p {
+      margin: 0 auto;
+      width: min(760px, 100%);
+      color: rgba(255,255,255,0.84);
+      font-weight: 600;
+    }
+
+    .sources {
+      margin-top: 28px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .sources a {
+      color: var(--blue);
+      font-weight: 800;
+    }
+
+    .pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 12px;
+      font-weight: 900;
+      margin-right: 6px;
+    }
+
+    .mobile-only-break {
+      display: none;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      z-index: 1000;
+      pointer-events: none;
+    }
+
+    .scroll-progress span {
+      display: block;
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--blue));
+      box-shadow: 0 0 22px rgba(40, 211, 255, 0.45);
+      transition: width 0.12s linear;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx, 50%) var(--my, 45%), rgba(114, 217, 255, 0.2), transparent 34%);
+      opacity: 0;
+      transition: opacity 0.25s ease;
+      pointer-events: none;
+    }
+
+    .hero:hover::after {
+      opacity: 1;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .toc-list a.is-active {
+      border-color: var(--sky);
+      background: var(--blue-soft);
+      box-shadow: 0 10px 26px rgba(8, 102, 255, 0.12);
+    }
+
+    .mini-card,
+    .flow-item,
+    .prompt-card {
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    @media (hover: hover) {
+      .mini-card:hover,
+      .flow-item:hover {
+        transform: translateY(-3px);
+        border-color: var(--sky);
+        box-shadow: 0 14px 30px rgba(8, 32, 80, 0.1);
+      }
+    }
+
+    .copy-btn.copied {
+      background: #fff;
+      color: #07101f;
+      animation: copyPulse 0.48s ease;
+    }
+
+    .back-to-top {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      width: 46px;
+      height: 46px;
+      border: 0;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+      color: #fff;
+      font-size: 20px;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 16px 34px rgba(8, 32, 80, 0.22);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(12px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      z-index: 999;
+    }
+
+    .back-to-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .motion-ready .badge,
+    .motion-ready h1,
+    .motion-ready .hero-copy,
+    .motion-ready .hero-meta span {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: heroRise 0.78s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .motion-ready h1 {
+      animation-delay: 0.08s;
+    }
+
+    .motion-ready .hero-copy {
+      animation-delay: 0.18s;
+    }
+
+    .motion-ready .hero-meta span {
+      animation-delay: calc(0.28s + (var(--i, 0) * 0.08s));
+    }
+
+    @keyframes heroRise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, transparent 34%, rgba(255,255,255,0.16) 50%, transparent 66%, transparent 100%);
+      transform: translateX(-130%);
+      pointer-events: none;
+    }
+
+    .section-header.is-visible::after {
+      animation: headerSweep 1.1s ease 0.1s both;
+    }
+
+    @keyframes headerSweep {
+      to {
+        transform: translateX(130%);
+      }
+    }
+
+    .section-rail {
+      position: fixed;
+      top: 50%;
+      right: 18px;
+      z-index: 998;
+      display: grid;
+      gap: 9px;
+      transform: translateY(-50%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .section-rail.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .section-rail a {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #aac4ec;
+      border: 2px solid #fff;
+      box-shadow: 0 4px 12px rgba(8, 32, 80, 0.18);
+      transition: transform 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .section-rail a.is-active {
+      background: var(--blue);
+      transform: scale(1.55);
+      box-shadow: 0 0 0 5px rgba(8, 102, 255, 0.14), 0 8px 18px rgba(8, 32, 80, 0.2);
+    }
+
+    .tilt-card {
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(var(--lift, 0px));
+    }
+
+    .tilt-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 20%, rgba(255,255,255,0.38) 50%, transparent 80%);
+      opacity: var(--glare, 0);
+      transform: translateX(var(--gx, -120%));
+      transition: opacity 0.18s ease, transform 0.18s ease;
+      pointer-events: none;
+    }
+
+    .prompt-card.tilt-card::after {
+      background: linear-gradient(135deg, transparent 18%, rgba(114, 217, 255, 0.16) 50%, transparent 82%);
+    }
+
+    @keyframes copyPulse {
+      0% {
+        transform: scale(1);
+      }
+      45% {
+        transform: scale(1.06);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .scroll-progress span,
+      .hero::after,
+      .reveal,
+      .mini-card,
+      .flow-item,
+      .prompt-card,
+      .back-to-top,
+      .section-rail,
+      .section-rail a,
+      .tilt-card,
+      .tilt-card::after,
+      .motion-ready .badge,
+      .motion-ready h1,
+      .motion-ready .hero-copy,
+      .motion-ready .hero-meta span,
+      .section-header::after,
+      .copy-btn.copied {
+        animation: none;
+        transition: none;
+      }
+
+      .reveal,
+      .motion-ready .badge,
+      .motion-ready h1,
+      .motion-ready .hero-copy,
+      .motion-ready .hero-meta span {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    @media (max-width: 1180px) {
+      .section-rail {
+        display: none;
+      }
+    }
+
+    @media (max-width: 820px) {
+      .grid,
+      .grid.three,
+      .stat-row,
+      .tool-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .toc-list a {
+        grid-template-columns: 36px 1fr;
+        gap: 12px;
+      }
+
+      .toc-number {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        width: calc(100vw - 22px);
+        max-width: var(--max);
+        padding-top: 18px;
+      }
+
+      .hero,
+      .section-header,
+      .intro,
+      .toc,
+      .content-card,
+      .cta {
+        border-radius: 16px;
+      }
+
+      .hero {
+        padding: 28px 22px;
+      }
+
+      .flow-item {
+        grid-template-columns: 44px 1fr;
+      }
+
+      .flow-index {
+        width: 44px;
+        height: 44px;
+        font-size: 15px;
+      }
+
+      pre {
+        font-size: 12px;
+      }
+
+      .mobile-only-break {
+        display: block;
+      }
+    }
+  </style>
+  <style>
+    .check-list ul,
+    .plain-list ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .check-list li,
+    .plain-list li {
+      list-style: none;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255,255,255,0.82);
+      font-size: 13px;
+      line-height: 1.7;
+      font-weight: 650;
+    }
+
+    .model-guide-grid {
+      display: grid;
+      gap: 16px;
+      margin: 26px 0 0;
+    }
+
+    .model-guide-card {
+      background: #fbfdff;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+    }
+
+    .model-guide-card h3 {
+      margin-top: 0;
+    }
+
+    .model-guide-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+
+    .model-guide-box {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--ink-soft);
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 600;
+    }
+
+    .model-guide-box strong {
+      display: block;
+      color: var(--blue-dark);
+      margin-bottom: 4px;
+      font-weight: 900;
+    }
+
+    .model-guide-card ol {
+      margin: 8px 0 0;
+      padding-left: 1.25em;
+      color: var(--ink-soft);
+      font-weight: 600;
+      line-height: 1.8;
+    }
+
+    .content-card.reveal {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 560px) {
+      .content-card h3 {
+        font-size: 20px;
+      }
+
+      .table-wrap {
+        max-width: 100%;
+      }
+
+      .model-guide-meta {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+  <div class="page">
+
+  <header class="hero">
+    <div class="hero-inner">
+      <p class="hero-label">SAVE MATERIAL</p>
+      <h1>Claude Codeで始める<br />AI起業12選<br />実践ロードマップ</h1>
+      <p class="hero-copy">
+        動画で紹介した12個のAI起業アイディアを、実際に選び、作り、売り始めるための保存版資料です。
+        「自分ならどれから始めるか」を決められるように、始め方・向いている人・注意点まで整理しました。
+      </p>
+      <div class="hero-meta" aria-label="資料の要点">
+        <span>完全未経験の開始方法</span>
+        <span>始め方と注意点</span>
+        <span>Claude Code活用</span>
+        <span>実践プロンプト付き</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro" aria-label="資料の使い方">
+      <div class="intro-card">
+        <span>01</span>
+        <h2>最初の候補を1つ選ぶ</h2>
+        <p>12個すべてをやる必要はありません。今のスキル、時間、営業しやすい相手から逆算して、最初の1個を決めてください。</p>
+      </div>
+      <div class="intro-card">
+        <span>02</span>
+        <h2>小さく成果を作る</h2>
+        <p>AI起業は、最初から大きな成果を狙うより、小さく作って反応を確認し、実績を増やす方が現実的です。</p>
+      </div>
+      <div class="intro-card">
+        <span>03</span>
+        <h2>高単価商品へ移行する</h2>
+        <p>作業代行だけで終わらせず、販売設計、構築支援、顧問、講座、SaaSも扱うと、収入の選択肢が増えます。</p>
+      </div>
+    </section>
+
+    <nav class="toc" aria-label="目次">
+      <p class="toc-label">CONTENTS</p>
+      <ol class="toc-list">
+        <li><a href="#sec01"><span class="toc-number">01</span><span>AI起業の基本方針</span></a></li>
+        <li><a href="#sec02"><span class="toc-number">02</span><span>12モデル比較表</span></a></li>
+        <li><a href="#sec03"><span class="toc-number">03</span><span>Agent Skill販売</span></a></li>
+        <li><a href="#sec04"><span class="toc-number">04</span><span>AIライター</span></a></li>
+        <li><a href="#sec05"><span class="toc-number">05</span><span>AIデザイナー</span></a></li>
+        <li><a href="#sec06"><span class="toc-number">06</span><span>SNSアフィリエイト</span></a></li>
+        <li><a href="#sec07"><span class="toc-number">07</span><span>AI構築代行</span></a></li>
+        <li><a href="#sec08"><span class="toc-number">08</span><span>AI顧問</span></a></li>
+        <li><a href="#sec09"><span class="toc-number">09</span><span>SNS運用代行</span></a></li>
+        <li><a href="#sec10"><span class="toc-number">10</span><span>HP制作</span></a></li>
+        <li><a href="#sec11"><span class="toc-number">11</span><span>オリジナルシステム開発</span></a></li>
+        <li><a href="#sec12"><span class="toc-number">12</span><span>AI駆動型Webマーケター</span></a></li>
+        <li><a href="#sec13"><span class="toc-number">13</span><span>SNS広告代理店</span></a></li>
+        <li><a href="#sec14"><span class="toc-number">14</span><span>AI系SaaSアプリ運営</span></a></li>
+        <li><a href="#sec15"><span class="toc-number">15</span><span>公開前・受注前チェック</span></a></li>
+      </ol>
+    </nav>
+
+    <section id="sec01">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 01</span>
+    <h2 class="section-title">AI起業の基本方針</h2>
+    <p>基本は「小さく始めて、AIで成果を出し、その実績をもとに高単価化する」ことです。</p>
+  </header>
+      <div class="content-card">
+        <p>
+          AI市場は急速に拡大しています。一方で、AIを「仕事の成果」にできる人はまだ足りていません。
+          欲しい人は増えているのに、提供できる人が少ない。ここに需要と供給のズレがあります。
+          Claude CodeやCodexのようなAIエージェントによって、文章、デザイン、HP、広告、資料、業務フロー、簡単なシステムまで、個人が形にできる範囲も広がっています。
+        </p>
+        <div class="quote">
+          <p>ただし、AIを使えるだけでは足りません。誰かの面倒な作業を楽にする、もしくは誰かの売上や成果に関係するものを作る。この顧客理解が大事です。</p>
+        </div>
+        <div class="flow">
+          <div class="flow-item"><span class="flow-index">1</span><div><h4>開始領域を決める</h4><p>文章、デザイン、SNS、HP、広告など、自分が最初に対応できる領域を1つに絞ります。</p></div></div>
+          <div class="flow-item"><span class="flow-index">2</span><div><h4>小さな実績を作る</h4><p>自分の発信、知り合いの案件、無料モニターなどで「AIで成果が出た」証拠を作ります。</p></div></div>
+          <div class="flow-item"><span class="flow-index">3</span><div><h4>高単価商品を提案する</h4><p>単発作業の後に、構築代行、顧問、マーケティング支援、SaaSを提案します。</p></div></div>
+        </div>
+        <div class="quote">
+          <p>開発力も大事ですが、その前に人の悩みや課題を理解することが必要です。だからセールスやマーケティングを現場で学ぶことが、AI起業でも重要です。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sec02">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 02</span>
+    <h2 class="section-title">12モデル比較表</h2>
+    <p>迷ったら、まずは「今すぐ作れるもの」と「実績化しやすいもの」から選んでください。</p>
+  </header>
+      <div class="content-card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>#</th><th>ビジネスモデル</th><th>最初に作るもの</th><th>向いている人</th><th>実績化の方向</th><th>注意点</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1</td><td>Agent Skill販売</td><td>1作業を再現する業務マニュアル</td><td>自分の手順を言語化できる人</td><td>導入サポート、講座、顧問</td><td>誰の何を解決するかを見せる</td></tr>
+              <tr><td>2</td><td>AIライター</td><td>SNS投稿、台本、配信文</td><td>文章と改善が好きな人</td><td>セールスライター、プロモーター</td><td>成果実績がないと埋もれやすい</td></tr>
+              <tr><td>3</td><td>AIデザイナー</td><td>サムネ、バナー、スライド</td><td>見る力と言語化力がある人</td><td>広告、LP、資料制作も扱う</td><td>審美眼が必要</td></tr>
+              <tr><td>4</td><td>SNSアフィリエイト</td><td>AI商品レビュー投稿</td><td>発信を継続できる人</td><td>自社商品、講座、顧問も提案する</td><td>売り込みだけだと信用を失う</td></tr>
+              <tr><td>5</td><td>AI構築代行</td><td>Claude Code環境、ナレッジ、Skill</td><td>整理と導入支援が得意な人</td><td>法人向けパッケージ化</td><td>業務理解なしでは品質が出ない</td></tr>
+              <tr><td>6</td><td>AI顧問</td><td>月次相談、添削、改善会</td><td>継続支援できる人</td><td>月額契約、チーム支援</td><td>完全未経験の初手にはしにくい</td></tr>
+              <tr><td>7</td><td>SNS運用代行</td><td>投稿案、台本、分析レポート</td><td>SNS改善が好きな人</td><td>LINE登録設計、広告、販売支援も扱う</td><td>目的設計が不十分だと単純作業担当になる</td></tr>
+              <tr><td>8</td><td>HP制作</td><td>1ページのHP、LPサンプル</td><td>見た目と実装に興味がある人</td><td>保守運用、LP改善</td><td>公開後の対応まで見る</td></tr>
+              <tr><td>9</td><td>オリジナルシステム開発</td><td>小さな業務改善アプリ</td><td>ITに明るい人</td><td>受託開発、SaaS化</td><td>最初から大規模にしない</td></tr>
+              <tr><td>10</td><td>AI駆動型Webマーケター</td><td>集客から販売までの設計</td><td>売上作りに興味がある人</td><td>プロモーター、事業責任者</td><td>文章量産だけで終わらせない</td></tr>
+              <tr><td>11</td><td>SNS広告代理店</td><td>広告文、クリエイティブ、LP</td><td>仮説検証が得意な人</td><td>広告運用チーム化</td><td>数字管理と改善が必須</td></tr>
+              <tr><td>12</td><td>AI系SaaSアプリ運営</td><td>1つの痛みを解決するMVP</td><td>課題発見と検証が好きな人</td><td>月額課金、法人展開</td><td>作れることより売れる課題が重要</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+
+    <section id="sec03">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 03</span>
+    <h2 class="section-title">1. Agent Skill販売</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>自分が普段やっている作業を1つ再現するSkill</div>
+            <div class="model-guide-box"><strong>向いている人</strong>手順を言語化するのが得意な人、教えるのが好きな人、すでに反復作業を持っている人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>YouTube台本Skillなら、テーマを変えて3本出し、口調・構成・CTAが安定していることをサンプルで見せます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>プロンプト単体では弱いです。成果物、使い方、改善方法までセットで見せます。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>毎回やっている作業を1つ選ぶ</li><li>口調・手順・NG例・成功サンプルを集める</li><li>ゴールシークで足りない情報を質問させる</li><li>3テーマでテストし、ズレを直す</li><li>使い方説明とサンプルを付けて販売する</li></ol>
+          </div>
+        </div>
+        
+        <div class="grid three">
+          <div class="mini-card"><h3>Skillとは何か</h3><p>AIに特定の仕事を覚えさせるための、オリジナル業務マニュアルです。形式はファイルで、専用の指示書や作業手順をまとめます。</p></div>
+          <div class="mini-card"><h3>売れる理由</h3><p>以前はプロンプト販売やGPTs販売が増えていました。その現在版がSkill販売です。GPTs販売では1回で1,200万円規模の売上事例もあります。</p></div>
+          <div class="mini-card"><h3>押さえるリンク</h3><p><a href="https://code.claude.com/docs/en/skills" target="_blank" rel="noopener">Claude CodeのSkills</a>、<a href="https://developers.openai.com/codex/skills" target="_blank" rel="noopener">CodexのAgent Skills</a>を確認しておくと理解が早いです。</p></div>
+        </div>
+        <div class="quote"><p>例としてYouTube台本なら、口調、冒頭の型、構成、CTA、NG表現をSkill化します。次からはテーマを伝えるだけで、自分の口調と指定した構成に近い台本を出しやすくなります。</p></div>
+        <div class="mini-card"><h3>スキルクリエイターとは</h3><p>Skillを作るためのSkillです。Codexのデスクトップアプリには標準で用意されているため、「スキルクリエイターを使って」と伝えるだけで使えます。</p></div>
+        <h3>星川式 Skill作成メソッド</h3>
+        <p>おすすめは、最初からSkillを作ろうとしないことです。まずAIと一緒に実際のタスクを実行します。出力や実行結果に満足できたら、その会話をもとにスキルクリエイターでSkill化します。</p>
+        <div class="flow">
+          <div class="flow-item"><span class="flow-index">1</span><div><h4>AIとタスクを実行する</h4><p>YouTube台本、LP改善、SNS投稿作成など、Skill化したいタスクをまず普通に依頼します。</p></div></div>
+          <div class="flow-item"><span class="flow-index">2</span><div><h4>満足するまで修正する</h4><p>口調、構成、NG表現、品質基準を伝えながら、理想に近い出力や実行結果まで調整します。</p></div></div>
+          <div class="flow-item"><span class="flow-index">3</span><div><h4>会話を参照してSkill化する</h4><p>満足できたら「これまでの私たちのラリーを参照して、このタスクをスキルクリエイターを使ってスキル化して」と指示します。</p></div></div>
+          <div class="flow-item"><span class="flow-index">4</span><div><h4>実際に使う</h4><p>作ったSkillを使って、別テーマや別案件で同じタスクを試します。</p></div></div>
+          <div class="flow-item"><span class="flow-index">5</span><div><h4>違う部分をフィードバックする</h4><p>イメージと違う部分、足りない判断基準、毎回入れてほしい手順を伝えて、Skillを更新します。</p></div></div>
+        </div>
+        <div class="check-list"><h3>Skill化しやすいタスク</h3><ul><li>毎回同じ流れで作るもの</li><li>口調や構成の指定が多いもの</li><li>品質チェックの基準があるもの</li><li>ナレッジや過去事例を見ながら作るもの</li><li>何度も繰り返し発生するもの</li></ul></div>
+      </div>
+    </section>
+    <section id="sec04">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 04</span>
+    <h2 class="section-title">2. AIライター</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>SNS投稿、YouTube台本、LINE配信文のサンプル</div>
+            <div class="model-guide-box"><strong>向いている人</strong>文章を書くこと、構成を考えること、反応を見て改善することが苦ではない人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>自分の発信や知り合いの投稿で、反応が取れた投稿、問い合わせが発生した配信文、改善前後を記録します。</div>
+            <div class="model-guide-box"><strong>注意点</strong>AIで文章を作れるだけでは差別化しにくいです。伸びた、売れた、反応が取れた実績を残します。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>自分の発信で投稿を10本作る</li><li>反応が良かった投稿を分析する</li><li>知り合いの投稿や配信文を1つ改善する</li><li>Before/Afterを記録する</li><li>台本、LP、LINEなど高単価になりやすい文章も扱う</li></ol>
+          </div>
+        </div>
+        
+        <p>ビジネスは文章でできています。SNS投稿、YouTube台本、LINE配信、LP、メルマガ、営業文まで、AIライターが入りやすい場所は多いです。</p>
+        <div class="check-list"><h3>差別化の判断項目</h3><ul><li>反応が増えた実績を残す</li><li>売れた実績を残す</li><li>反応が取れた理由を説明する</li><li>文章作成だけで終わらず、SNSマーケターやセールスライターも担当する</li></ul></div>
+        
+  <div class="prompt-card tilt-card">
+    <button class="copy-btn" type="button">コピー</button>
+    <strong>AIライターの実績化プロンプト</strong>
+    <pre><code>あなたはセールスライターです。
+以下の文章を、実績として見せられる形に改善してください。
+
+# 文章
+（投稿文、台本、LP、LINE配信などを貼る）
+
+# 目的
+（認知、登録、問い合わせ、販売など）
+
+# 出力
+1. 改善ポイント
+2. 改善後の文章
+3. Before/Afterとして見せる説明文
+4. 次にテストすべき仮説</code></pre>
+  </div>
+      </div>
+    </section>
+    <section id="sec05">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 05</span>
+    <h2 class="section-title">3. AIデザイナー</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>サムネ、広告バナー、スライドのBefore/After</div>
+            <div class="model-guide-box"><strong>向いている人</strong>見た目の違和感に気づける人、余白・色・文字の読みやすさを言語化できる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>サムネ、広告バナー、スライドを改善前後で並べ、文字の読みやすさ・訴求・クリック設計の改善理由を書きます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>AIが作れるからデザイン力が不要、ではありません。審美眼と修正指示の言語化が価値です。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>1ジャンルに絞る</li><li>参考デザインを10個集める</li><li>AIで初期案を作る</li><li>文字、余白、訴求を改善する</li><li>改善前後を並べて実績化する</li></ol>
+          </div>
+        </div>
+        
+        <p>デザインは、スライド、サムネイル、バナー、LP、営業資料、SNS投稿画像など、あらゆる場所にあります。AIで初期案を作る難易度は下がっていますが、価値になるのは改善できる目です。</p>
+        <div class="grid three">
+          <div class="mini-card"><h3>講座内の活用例</h3><p>Claude Designを使ったHPリニューアル、LPサンプル制作、スライド制作などの事例があります。</p></div>
+          <div class="mini-card"><h3>画像生成の選択肢</h3><p><a href="https://openai.com/index/introducing-chatgpt-images-2-0/" target="_blank" rel="noopener">ChatGPT Images</a>のような高精度の画像生成AIで、サムネイルや広告クリエイティブを作りやすくなっています。</p></div>
+          <div class="mini-card"><h3>絞り方</h3><p>最初はYouTubeサムネ専門、Meta広告バナー専門のようにジャンルを絞ると実績化しやすいです。</p></div>
+        </div>
+        <div class="check-list"><h3>見るべきポイント</h3><ul><li>文字が読みにくくないか</li><li>余白が詰まりすぎていないか</li><li>色がズレていないか</li><li>訴求が弱くないか</li><li>クリックや登録を増やす設計になっているか</li></ul></div>
+      </div>
+    </section>
+    <section id="sec06">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 06</span>
+    <h2 class="section-title">4. SNSアフィリエイト</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>実際に使ったAI商品や教材のレビュー投稿</div>
+            <div class="model-guide-box"><strong>向いている人</strong>SNS発信を続けられる人、良いものを自分の言葉で紹介できる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>紹介投稿のクリック、成約、質問DM、購入後の感想を記録し、どの訴求で反応が取れたかを残します。</div>
+            <div class="model-guide-box"><strong>注意点</strong>リンクを貼るだけでは売れません。実体験、注意点、使い方まで含めて価値提供します。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>紹介したい商品を実際に使う</li><li>向いている人と向いていない人を書く</li><li>自分の成果や感想を投稿する</li><li>反応が取れた訴求を分析する</li><li>自社商品や相談受付も用意する</li></ol>
+          </div>
+        </div>
+        
+        <p>AIジャンルはアフィリエイト発信との相性が高いです。AIツールの使い方、Claude Code活用法、AIで副業する方法、業務効率化の方法を発信し、良い商品を自分の言葉で紹介します。</p>
+        <div class="quote"><p>星川の場合、好きなインフルエンサーのBrainをXで紹介し、10万円ほど収益が出たことがあります。売り込んだというより、ぼそっと呟いたら売れた感覚で、AIジャンルの需要の大きさを感じた事例です。</p></div>
+        <div class="check-list"><h3>投稿前チェック</h3><ul><li>実際に使った感想が入っている</li><li>向いている人と向いていない人を書いている</li><li>良い点だけでなく注意点も書いている</li><li>リンク先の商品と自分の発信テーマがズレていない</li></ul></div>
+      </div>
+    </section>
+    <section id="sec07">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 07</span>
+    <h2 class="section-title">5. AI構築代行</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>Claude Code環境、ナレッジ整理、1つのSkill導入</div>
+            <div class="model-guide-box"><strong>向いている人</strong>整理整頓が得意な人、相手の業務を聞き出せる人、導入支援が好きな人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>1つの業務をAI化し、作業時間が減った、出力品質が安定した、担当者が使えるようになった状態を事例にします。</div>
+            <div class="model-guide-box"><strong>注意点</strong>構築だけしても使われないことがあります。誰が、いつ、何に使うかまで決めます。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>相手の業務と困りごとを聞く</li><li>AI化しやすい作業を1つ選ぶ</li><li>必要なナレッジを整理する</li><li>Claude Codeで使うSkillやフォルダを作る</li><li>使い方を説明して運用テストする</li></ol>
+          </div>
+        </div>
+        
+        <p>構築代行と聞くと、エンジニアがやる難しい仕事に見えるかもしれません。実際は、Claude Codeの環境構築、ナレッジ整理、業務手順の設計、Skill作成、導入支援を代わりに行う仕事です。</p>
+        <div class="quote"><p>AIを使いたい会社は多い一方で、何から整えればいいか分からないケースが多いです。ChatGPTを契約した、Claude Codeを入れた。でも会社の情報がバラバラで、誰が何に使うか決まっていない。ここを整えることに価値があります。</p></div>
+        <div class="tool-grid">
+          <a class="tool-card" href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener"><strong>Claude Code Quickstart</strong><span>導入支援前に公式の基本フローを確認する</span></a>
+          <a class="tool-card" href="https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills" target="_blank" rel="noopener"><strong>Agent Skills解説</strong><span>業務知識のパッケージ化を理解する</span></a>
+        </div>
+        
+  <div class="prompt-card tilt-card">
+    <button class="copy-btn" type="button">コピー</button>
+    <strong>AI構築代行のヒアリングプロンプト</strong>
+    <pre><code>あなたはAI導入コンサルタントです。
+以下のクライアント情報をもとに、初回ヒアリング項目を作ってください。
+
+# クライアント情報
+業種:
+主な業務:
+困っていること:
+使っているツール:
+AI利用状況:
+
+# 出力
+1. 質問リスト
+2. 優先してAI化すべき業務
+3. 必要なファイル・情報
+4. 初回提案のパッケージ案
+5. 受注前に確認すべきリスク</code></pre>
+  </div>
+      </div>
+    </section>
+    <section id="sec08">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 08</span>
+    <h2 class="section-title">6. AI顧問</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>月1回のAI活用相談、出力添削、改善会</div>
+            <div class="model-guide-box"><strong>向いている人</strong>継続支援が得意な人、業務理解と改善提案ができる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>月次で相談内容、改善した業務、添削した出力、次月の改善テーマを残し、継続支援の価値を見せます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>完全未経験でいきなり名乗るのは難しいです。まず代行や制作で実績を作ってからAI顧問を提案します。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>過去のAI利用状況を聞く</li><li>毎月改善する業務を決める</li><li>出力物を添削する</li><li>新しい使い方を提案する</li><li>成果と課題を月次で記録する</li></ol>
+          </div>
+        </div>
+        
+        <p>AI構築代行はAI環境を作る仕事です。AI顧問はAI活用を継続的に支援する仕事です。わかりやすく言うとコンサルです。</p>
+        <div class="grid">
+          <div class="mini-card"><h3>構築代行</h3><p>必要な環境やナレッジを作り、相手がAIで仕事を回せる状態にする。</p></div>
+          <div class="mini-card"><h3>AI顧問</h3><p>月次相談、添削、改善会を通じて、クライアントが自走できるように支援する。</p></div>
+        </div>
+        <div class="check-list"><h3>顧問で見るべきこと</h3><ul><li>相手の業務でAIをどう使うか</li><li>出力物のどこを直せば実務で使えるか</li><li>毎月どの業務を改善するか</li><li>最新ツールの情報だけでなく、相手の成果に関係するか</li></ul></div>
+      </div>
+    </section>
+    <section id="sec09">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 09</span>
+    <h2 class="section-title">7. SNS運用代行</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>投稿案、台本、分析レポートの一部代行</div>
+            <div class="model-guide-box"><strong>向いている人</strong>SNS改善が好きな人、企画・分析・改善を継続できる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>投稿数だけでなく、保存数、クリック、LINE登録、問い合わせなど目的に近い数字をBefore/Afterで見ます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>投稿を作るだけだと単純作業担当になります。何の成果を増やす運用なのかを先に決めます。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>目的を決める</li><li>競合と過去投稿を分析する</li><li>投稿案を10本作る</li><li>投稿後の数字を見て改善する</li><li>LINE登録や問い合わせ設計も担当する</li></ol>
+          </div>
+        </div>
+        
+        <p>SNS運用は、リサーチ、企画、投稿文や台本作成、数字分析、改善まで作業量が多い仕事です。Claude Codeに商品情報、過去投稿、競合傾向を読み込ませると、企画案や改善レポートを作りやすくなります。</p>
+        <div class="check-list"><h3>最初に決めること</h3><ul><li>フォロワーを増やしたいのか</li><li>問い合わせを増やしたいのか</li><li>LINE登録を増やしたいのか</li><li>投稿作成、リール台本、分析レポートのどれから担当するのか</li><li>AIで短縮した時間を戦略と改善に使えているか</li></ul></div>
+      </div>
+    </section>
+    <section id="sec10">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 10</span>
+    <h2 class="section-title">8. HP制作</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>1ページのHP、LPサンプル、問い合わせ設計</div>
+            <div class="model-guide-box"><strong>向いている人</strong>見た目と実装に興味がある人、クライアント対応を丁寧にできる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>公開URL、スマホ表示、問い合わせ設計、納品までの時間、修正対応の内容をセットで見せます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>作って終わりではありません。表示崩れ、文章差し替え、問い合わせ不具合への対応範囲を決めます。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>業種を1つ決める</li><li>1ページのサンプルを作る</li><li>スマホ表示を確認する</li><li>問い合わせフォームと問い合わせ設計を確認する</li><li>保守範囲を決めて提案する</li></ol>
+          </div>
+        </div>
+        
+        <p>Claude DesignやClaude Codeによって、デザイン初期案、フロントエンドコード、スマホ表示の調整が進めやすくなっています。</p>
+        <div class="stat-row">
+          <div class="stat"><small>受講生事例</small><b>20万円</b><span>AIマーケティング構築講座の受講生が、非エンジニアでHP制作を受注した事例があります。</span></div>
+          <div class="stat"><small>納品時間</small><b>2時間</b><span>2時間で納品し、時給10万円を突破した事例として紹介されています。</span></div>
+          <div class="stat"><small>周辺事例</small><b>TV系HP</b><span>メルおじさんがClaude Designを使い、大手テレビチャンネルのHPを納品した事例もあります。</span></div>
+        </div>
+        <p>ただしHPは作って終わりではありません。公開後に文章や画像を差し替えたい、問い合わせフォームが動かない、スマホで崩れる、ということが起きます。保守範囲まで決めて提案します。</p>
+        <div class="tool-grid">
+          <a class="tool-card" href="https://docs.github.com/pages/quickstart" target="_blank" rel="noopener"><strong>GitHub Pages</strong><span>シンプルなHPや資料ページの公開方法を確認する</span></a>
+          <a class="tool-card" href="https://code.claude.com/docs/en/quickstart" target="_blank" rel="noopener"><strong>Claude Code</strong><span>コード生成と修正の基本フローを押さえる</span></a>
+        </div>
+        
+  <div class="prompt-card tilt-card">
+    <button class="copy-btn" type="button">コピー</button>
+    <strong>HP制作の要件定義プロンプト</strong>
+    <pre><code>あなたはWebディレクターです。
+以下の情報から、Claude CodeでHPを作るための要件定義を作ってください。
+
+# 事業情報
+サービス名:
+ターゲット:
+提供価値:
+掲載したい内容:
+問い合わせ方法:
+
+# 出力
+1. ページ構成
+2. ファーストビューの訴求
+3. 必要なセクション
+4. スマホ表示で注意する点
+5. 公開前チェックリスト
+6. 保守運用で確認すべき項目</code></pre>
+  </div>
+      </div>
+    </section>
+    <section id="sec11">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 11</span>
+    <h2 class="section-title">9. オリジナルシステム開発</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>自分用または知り合い用の小さな業務改善アプリ</div>
+            <div class="model-guide-box"><strong>向いている人</strong>ITに明るい人、エラー調査や検証を粘れる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>自分用ミニアプリから始め、手作業が何分減ったか、どの作業が自動化されたかをデモで見せます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>最初から大規模にしないこと。データ管理、権限、保守の責任範囲も確認します。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>毎月繰り返している手作業を探す</li><li>必要機能を3つに絞る</li><li>Claude CodeでMVPを作る</li><li>実際に使って壊れる箇所を直す</li><li>知り合いの業務で小さく試す</li></ol>
+          </div>
+        </div>
+        
+        <p>これは少し上級者向けです。完全未経験の最初の候補というより、エンジニアリングが得意な人、ITに明るい人に向いています。</p>
+        <p>最初から大きなSaaSを作るより、予約管理、顧客管理、業務用AIチャット、請求書や見積書の自動作成など、目の前の業務を小さく改善するところから始めます。</p>
+        <div class="check-list"><h3>おすすめの順番</h3><ul><li>まず自分用のミニアプリを作る</li><li>次に知り合いの業務を小さく改善する</li><li>その後に受託として受ける</li><li>機能を増やす前に、実際に使われるかを確認する</li></ul></div>
+      </div>
+    </section>
+    <section id="sec12">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 12</span>
+    <h2 class="section-title">10. AI駆動型Webマーケター</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>集客から販売までの設計</div>
+            <div class="model-guide-box"><strong>向いている人</strong>売上作りに興味がある人、文章・SNS・LINE・LPを横断して考えられる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>集客媒体、LINE登録、無料価値提供、販売までの設計を作り、登録数や売上の変化を見せます。</div>
+            <div class="model-guide-box"><strong>注意点</strong>AIで文章を量産することが目的ではありません。誰に、何を、どの順番で届けるかが本体です。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>商品とターゲットを理解する</li><li>最初の集客媒体を決める</li><li>LINE登録や無料プレゼントを設計する</li><li>販売までの配信やセミナーを作る</li><li>数字を見て改善する</li></ol>
+          </div>
+        </div>
+        
+        <p>Webマーケター・Webプロモーターは、インターネットを活用して集客や売上向上を専門に行う仕事です。星川が2ヶ月で2.8億円規模の売上に関わった時も、商品を持っている人と組み、集客から販売までの設計を担当しました。</p>
+        <div class="quote"><p>AIライター、SNS運用代行、SNSアフィリエイトから始めて、対応できる業務を増やし、AI駆動型Webマーケターとして売上作りを担当できるようになると、キャリアと収入の選択肢が増えます。</p></div>
+        
+  <div class="prompt-card tilt-card">
+    <button class="copy-btn" type="button">コピー</button>
+    <strong>AI駆動型Webマーケの販売設計プロンプト</strong>
+    <pre><code>あなたはWebプロモーターです。
+以下の商品を売るために、AIを使った集客から販売までの設計を作ってください。
+
+# 商品情報
+商品名:
+価格:
+ターゲット:
+悩み:
+強み:
+実績:
+
+# 出力
+1. 全体設計
+2. 最初に出すコンテンツ案
+3. LINE登録の訴求
+4. セミナーまたは個別相談の訴求
+5. AIで量産すべき制作物
+6. 数字で見るべき改善ポイント</code></pre>
+  </div>
+      </div>
+    </section>
+    <section id="sec13">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 13</span>
+    <h2 class="section-title">11. SNS広告代理店</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>広告文、クリエイティブ、LP、LINE登録設計のテスト</div>
+            <div class="model-guide-box"><strong>向いている人</strong>数字を見るのが苦ではない人、仮説検証を回せる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>広告素材の制作時間、クリック率、CPA、LP改善、面談着座など、広告から売上までの数字を追います。</div>
+            <div class="model-guide-box"><strong>注意点</strong>広告はお金が動きます。予算、権限、成果指標、停止条件を事前に決めます。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>小さな広告素材を複数作る</li><li>訴求違いでABテストする</li><li>LPやLINEの離脱点を見る</li><li>成果が出た条件を別案件にも適用する</li><li>運用範囲を明確にして受注する</li></ol>
+          </div>
+        </div>
+        
+        <p>SNS広告の代理店は、Instagram、Facebook、TikTokなどの広告運用を代行する仕事です。広告文、クリエイティブ、LP、LINE登録設計までAIで効率化できる領域が多いです。</p>
+        <p>AIマーケティング構築講座の受講生・クリュウさんは、広告運用からLINE、面談着座まで含めて複数案件を支援し、AI活用後に売上がざっくり3〜4倍になったと対談で話しています。</p>
+        <div class="stat-row">
+          <div class="stat"><small>売上変化</small><b>3〜4倍</b><span>AI活用後の変化として対談で語られた数字です。</span></div>
+          <div class="stat"><small>広告制作</small><b>30分</b><span>Meta広告クリエイティブは、外注だと1日かかる内容が30分で作れるようになりました。</span></div>
+          <div class="stat"><small>LP制作</small><b>1日</b><span>外注だと約2週間かかるものが、AIで1日レベルまで短縮されています。</span></div>
+        </div>
+        <div class="check-list"><h3>始め方</h3><ul><li>最初は自分の商品やアフィリエイトで検証する</li><li>知り合いの小さな案件で成果が出た条件を探す</li><li>成果確率が高くなったらクライアントの広告運用も担当する</li><li>広告費を使う前に、成果指標と停止条件を決める</li></ul></div>
+      </div>
+    </section>
+    <section id="sec14">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 14</span>
+    <h2 class="section-title">12. AI系SaaSアプリ運営</h2>
+    <p>このビジネスモデルを実際に始めるための、向いている人・手順・注意点を整理します。</p>
+  </header>
+      <div class="content-card">
+        <div class="model-guide-card">
+          <h3>始める前に決めること</h3>
+          <div class="model-guide-meta">
+            <div class="model-guide-box"><strong>最初に作るもの</strong>1つの痛みを解決するMVP</div>
+            <div class="model-guide-box"><strong>向いている人</strong>課題発見が好きな人、ユーザーに話を聞ける人、改善を続けられる人</div>
+            <div class="model-guide-box"><strong>実績化の見せ方</strong>MVPを5人に使ってもらい、継続利用された理由、支払い意思、次に欲しい機能を記録します。</div>
+            <div class="model-guide-box"><strong>注意点</strong>作れることより、売れる課題を選ぶことが重要です。作ってから売り先を探す順番にしないでください。</div>
+          </div>
+          <div class="model-guide-box">
+            <strong>最初の手順</strong>
+            <ol><li>毎週起きる面倒な作業を探す</li><li>お金を払うほど痛いか聞く</li><li>最小機能だけ作る</li><li>5人に使ってもらう</li><li>継続利用される理由を強化する</li></ol>
+          </div>
+        </div>
+        
+        <p>SaaSは月額課金型のソフトウェアです。ユーザーが増えると継続課金が増えるので、事業規模が大きくなりやすい領域です。</p>
+        <p>ただし、AI系SaaSはAIがすごいから売れるのではありません。誰かが毎日困っている作業を、分かりやすく楽にするから利用されます。</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>事例</th><th>何を楽にしたか</th><th>伸びた理由</th><th>公開されている数字</th></tr></thead>
+            <tbody>
+              <tr><td><a href="https://prtimes.jp/main/html/rd/p/000000215.000056805.html" target="_blank" rel="noopener">IVRy</a></td><td>電話対応</td><td>予約・問い合わせの取りこぼしが売上に直結するため、価値が伝わりやすい。</td><td>累計アカウント5万件超、累計発着信7,000万件超</td></tr>
+              <tr><td><a href="https://prtimes.jp/main/html/rd/p/000000102.000104415.html" target="_blank" rel="noopener">Yoom</a></td><td>デスクワークの自動化</td><td>チャットで答えるだけでなく、700以上のアプリを操作して業務を進める方向に寄っている。</td><td>AIワーカーが国内外700以上のアプリを操作</td></tr>
+              <tr><td><a href="https://www.notta.ai/" target="_blank" rel="noopener">Notta</a></td><td>文字起こし・議事録</td><td>会議後の議事録、要約、検索をAIで減らしている。</td><td>累計1,500万人、導入企業5,000社超</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="grid three">
+          <div class="mini-card"><h3>海外の事例</h3><p>Claude Codeを使って作られたAI営業支援ツールが、年商約1.6億円規模まで伸びた事例があります。</p></div>
+          <div class="mini-card"><h3>初アプリの事例</h3><p>初めて作ったアプリで、月約400万円の売上を作った事例も紹介されています。</p></div>
+          <div class="mini-card"><h3>国内の公開事例</h3><p>プログラミング歴ゼロの経営者がClaude CodeとCursorを使い、補助金検索SaaSで90日後に月商100万円を超えた事例があります。</p></div>
+        </div>
+        <div class="quote"><p>Claude Codeは開発の難易度を下げます。ただ、売れるかどうかを決めるのは市場選びと課題選びです。誰の、どんな面倒を、どれくらい楽にするのかを先に決めます。</p></div>
+        
+  <div class="prompt-card tilt-card">
+    <button class="copy-btn" type="button">コピー</button>
+    <strong>AI系SaaSの課題検証プロンプト</strong>
+    <pre><code>あなたはSaaS事業の企画担当です。
+以下のアイデアが、SaaSとして売れる課題か検証してください。
+
+# アイデア
+（作りたいアプリの概要）
+
+# 想定ユーザー
+（誰が使うか）
+
+# 出力
+1. 課題の強さ
+2. MVPで作るべき機能
+3. 最初に営業すべき相手
+4. 価格の仮説
+5. 作る前に聞くべき質問</code></pre>
+  </div>
+      </div>
+    </section>
+
+
+    <section id="sec15">
+      
+  <header class="section-header">
+    <span class="section-kicker">SECTION 15</span>
+    <h2 class="section-title">公開前・受注前チェック</h2>
+    <p>AI起業はスピードが大事ですが、信頼を失わないための確認も同じくらい大事です。</p>
+  </header>
+      <div class="content-card">
+        <div class="grid">
+          <div class="check-list">
+            <h3>公開前チェック</h3>
+            <ul>
+              <li>誰のどんな悩みを解決するかが1文で言える</li>
+              <li>サンプルが1つ以上ある</li>
+              <li>できること、できないことを明記している</li>
+              <li>成果保証のような言い方をしていない</li>
+              <li>納品後の修正範囲を決めている</li>
+            </ul>
+          </div>
+          <div class="check-list">
+            <h3>受注前チェック</h3>
+            <ul>
+              <li>相手の目的が売上、効率化、採用、問い合わせなど何かを確認した</li>
+              <li>必要な素材、アカウント、権限を確認した</li>
+              <li>納期と初回成果物を決めた</li>
+              <li>AIで扱ってよい情報範囲を確認した</li>
+              <li>継続支援で追加提案できる項目を見つけた</li>
+            </ul>
+          </div>
+        </div>
+        <h3>失敗しやすいポイント</h3>
+        <div class="grid">
+          <div class="mini-card"><h3>AIで作っただけで売ろうとする</h3><p>価値が伝わらず、安く見られます。Before/After、用途、成果に近づいた理由まで見せてください。</p></div>
+          <div class="mini-card"><h3>最初から全部やろうとする</h3><p>作業範囲が広がり、納品品質が落ちます。1つの媒体、1つの成果物、1つの業務から始めます。</p></div>
+          <div class="mini-card"><h3>Skillに処理を詰め込みすぎる</h3><p>出力が不安定になり、修正しにくくなります。1機能1Skillに分け、必要なら複数Skillを組み合わせます。</p></div>
+          <div class="mini-card"><h3>顧客情報の扱いが曖昧</h3><p>信頼を失うリスクがあります。扱ってよい情報、保存範囲、共有範囲を事前に確認します。</p></div>
+          <div class="mini-card"><h3>成果保証のように見せる</h3><p>期待値が高くなりすぎてトラブルになります。できること、できないこと、検証前提を明記します。</p></div>
+          <div class="mini-card"><h3>SaaSを作ってから売り先を探す</h3><p>作ったのに使われない状態になりやすいです。先に課題ヒアリングし、MVPで検証してから作り込みます。</p></div>
+        </div>
+        
+  <div class="prompt-card tilt-card">
+    <button class="copy-btn" type="button">コピー</button>
+    <strong>12モデル選定プロンプト</strong>
+    <pre><code>あなたはAI起業の事業モデル選定を支援するアドバイザーです。
+以下の12個のビジネスモデルと私の状況をもとに、最初に選ぶべき候補を判断してください。
+
+# 12個の候補
+1. Agent Skill販売
+AIに特定の仕事を覚えさせる業務マニュアルを作り、販売する。
+
+2. AIライター
+SNS投稿、YouTube台本、LINE配信、LPなどの文章制作を行う。
+
+3. AIデザイナー
+サムネイル、広告バナー、スライド、LPなどのデザイン制作を行う。
+
+4. SNSアフィリエイト
+AIツール、教材、関連商品を発信で紹介する。
+
+5. AI構築代行
+Claude Code環境、ナレッジ整理、業務手順、Skill作成を代行する。
+
+6. AI顧問
+AI活用の相談、添削、改善提案を継続的に行う。
+
+7. SNS運用代行
+リサーチ、企画、投稿文、台本、分析レポートを支援する。
+
+8. HP制作
+Claude DesignやClaude Codeを使ってHPやLPを制作する。
+
+9. オリジナルシステム開発
+予約管理、顧客管理、請求書作成など小さな業務改善アプリを作る。
+
+10. AI駆動型Webマーケター
+集客、LINE登録、販売ページ、配信、セミナーなどを横断して設計する。
+
+11. SNS広告代理店
+広告文、クリエイティブ、LP、LINE登録設計、広告運用を支援する。
+
+12. AI系SaaSアプリ運営
+月額課金型のソフトウェアを作り、継続利用される課題を解決する。
+
+# 私の状況
+使える時間:
+得意なこと:
+苦手なこと:
+今ある実績:
+営業できそうな相手:
+興味があるモデル:
+使えるAIツール:
+最初に売れそうな相手:
+
+# 出力
+1. 最初に選ぶべきビジネスモデル
+2. 選んだ理由
+3. 最初に作るサンプル
+4. 実績化するために記録する項目
+5. 最初に提案する相手
+6. 失敗しやすいポイント
+7. 次に高単価化する場合の候補</code></pre>
+  </div>
+      </div>
+    </section>
+
+    <section class="cta" aria-label="最後に">
+      <p class="cta-label">NEXT ACTION</p>
+      <h2>まず1つ選んで、サンプルを作る</h2>
+      <p>
+        AI起業で大事なのは、実際に作業を始めることです。
+        この資料を閉じる前に、12個の中から1つ選び、今日作るサンプルを決めてください。
+      </p>
+      <a class="cta-button" href="#sec02">12モデル比較表に戻る</a>
+    </section>
+  </main>
+  </div>
+
+  <button class="back-to-top" type="button" aria-label="ページ上部へ戻る">↑</button>
+  <script>
+    document.body.classList.add("motion-ready");
+
+    document.querySelectorAll(".hero-meta span").forEach((item, index) => {
+      item.style.setProperty("--i", index);
+    });
+
+    const buttons = document.querySelectorAll(".copy-btn");
+    buttons.forEach((button) => {
+      button.addEventListener("click", async () => {
+        const card = button.closest(".prompt-card");
+        const code = card ? card.querySelector("code") : null;
+        if (!code) return;
+        const text = code.innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+          const original = button.textContent;
+          button.textContent = "コピー済み";
+          button.classList.add("copied");
+          setTimeout(() => {
+            button.textContent = original;
+            button.classList.remove("copied");
+          }, 1400);
+        } catch (error) {
+          button.textContent = "選択してコピー";
+        }
+      });
+    });
+
+    const progressFill = document.querySelector(".scroll-progress span");
+    const backToTop = document.querySelector(".back-to-top");
+    const hero = document.querySelector(".hero");
+    const sections = Array.from(document.querySelectorAll("section[id^='sec']"));
+    const tocLinks = Array.from(document.querySelectorAll(".toc-list a"));
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sectionRail = document.createElement("nav");
+    sectionRail.className = "section-rail";
+    sectionRail.setAttribute("aria-label", "セクションナビゲーション");
+    sectionRail.innerHTML = sections.map((section, index) => {
+      const title = section.querySelector(".section-title")?.innerText || `SECTION ${index + 1}`;
+      return `<a href="#${section.id}" aria-label="${title}"></a>`;
+    }).join("");
+    document.body.appendChild(sectionRail);
+    const railLinks = Array.from(sectionRail.querySelectorAll("a"));
+
+    const updateScrollState = () => {
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const maxScroll = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+      const progress = Math.min(Math.max(scrollTop / maxScroll, 0), 1);
+
+      if (progressFill) {
+        progressFill.style.width = `${progress * 100}%`;
+      }
+
+      if (backToTop) {
+        backToTop.classList.toggle("is-visible", scrollTop > 700);
+      }
+
+      sectionRail.classList.toggle("is-visible", scrollTop > 700);
+
+      let currentId = "";
+      sections.forEach((section) => {
+        const top = section.getBoundingClientRect().top;
+        if (top <= 160) {
+          currentId = section.id;
+        }
+      });
+
+      tocLinks.forEach((link) => {
+        link.classList.toggle("is-active", link.getAttribute("href") === `#${currentId}`);
+      });
+
+      railLinks.forEach((link) => {
+        link.classList.toggle("is-active", link.getAttribute("href") === `#${currentId}`);
+      });
+    };
+
+    const revealTargets = document.querySelectorAll(".hero, .intro, .toc, .section-header, .content-card, .cta");
+
+    if (prefersReducedMotion) {
+      revealTargets.forEach((target) => target.classList.add("is-visible"));
+    } else {
+      revealTargets.forEach((target) => target.classList.add("reveal"));
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -60px 0px" });
+
+      revealTargets.forEach((target) => revealObserver.observe(target));
+    }
+
+    if (hero && !prefersReducedMotion) {
+      hero.addEventListener("pointermove", (event) => {
+        const rect = hero.getBoundingClientRect();
+        const x = ((event.clientX - rect.left) / rect.width) * 100;
+        const y = ((event.clientY - rect.top) / rect.height) * 100;
+        hero.style.setProperty("--mx", `${x}%`);
+        hero.style.setProperty("--my", `${y}%`);
+      });
+    }
+
+    const tiltTargets = document.querySelectorAll(".mini-card, .flow-item, .prompt-card");
+
+    if (!prefersReducedMotion && window.matchMedia("(hover: hover)").matches) {
+      tiltTargets.forEach((target) => {
+        target.classList.add("tilt-card");
+
+        target.addEventListener("pointermove", (event) => {
+          const rect = target.getBoundingClientRect();
+          const relX = (event.clientX - rect.left) / rect.width;
+          const relY = (event.clientY - rect.top) / rect.height;
+          const rotateY = (relX - 0.5) * 7;
+          const rotateX = (0.5 - relY) * 7;
+
+          target.style.setProperty("--rx", `${rotateX.toFixed(2)}deg`);
+          target.style.setProperty("--ry", `${rotateY.toFixed(2)}deg`);
+          target.style.setProperty("--lift", "-2px");
+          target.style.setProperty("--glare", "1");
+          target.style.setProperty("--gx", `${(relX * 160 - 80).toFixed(1)}%`);
+        });
+
+        target.addEventListener("pointerleave", () => {
+          target.style.setProperty("--rx", "0deg");
+          target.style.setProperty("--ry", "0deg");
+          target.style.setProperty("--lift", "0px");
+          target.style.setProperty("--glare", "0");
+          target.style.setProperty("--gx", "-120%");
+        });
+      });
+    }
+
+    if (backToTop) {
+      backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion ? "auto" : "smooth" });
+      });
+    }
+
+    updateScrollState();
+    window.addEventListener("scroll", updateScrollState, { passive: true });
+    window.addEventListener("resize", updateScrollState);
+  </script>
+</body>
+</html>
